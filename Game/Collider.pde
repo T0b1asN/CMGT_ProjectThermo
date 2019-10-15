@@ -19,8 +19,6 @@ public abstract class Collider
   public abstract boolean isColliding(Collider other);
   public abstract void checkWall();
 
-  public abstract void onDestroy();
-
   public void ignoreCollision(String tag)
   {
     ignoreCollision.add(tag);
@@ -34,6 +32,11 @@ public abstract class Collider
   public PVector pos()
   {
     return parent.getPos();
+  }
+  
+  void onDestroy()
+  {
+    removeCollider(this);
   }
 }
 
@@ -96,11 +99,6 @@ public class CircleCollider extends Collider
   {
     if (pos().x < r || pos().x > width) super.parent.onWall();
     if (pos().y < r || pos().y > height) super.parent.onWall();
-  }
-
-  void onDestroy()
-  {
-    removeCollider(this);
   }
 }
 
@@ -191,10 +189,6 @@ public class RectangleCollider extends Collider
   }
 
   public void checkWall()
-  {
-  }
-
-  public void onDestroy()
   {
   }
 }
