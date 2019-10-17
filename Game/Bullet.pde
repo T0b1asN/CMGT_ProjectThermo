@@ -41,7 +41,7 @@ public class Bullet implements Rigidbody
   
   void onCollision()
   {
-    println(id + " bullet has collided with something");
+    //println(id + " bullet has collided with something");
   }
   
   void onWall()

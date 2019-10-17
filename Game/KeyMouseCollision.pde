@@ -81,6 +81,8 @@ void handleCollisions()
     {
       if(((Collider)coll.get(i)).isColliding((Collider)coll.get(j)))
       {
+        
+        ((Collider)coll.get(i)).notifyCollision();
         ((Collider)coll.get(j)).notifyCollision();
       }
     }

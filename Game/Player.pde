@@ -98,7 +98,7 @@ public class Player implements Rigidbody
   //Rigidbody
   public void onCollision()
   {
-    
+    println("Player had collision");
   }
   
   public void onWall()

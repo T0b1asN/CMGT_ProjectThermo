@@ -51,7 +51,7 @@ public class CircleCollider extends Collider
 
   public CircleCollider(Rigidbody parent, float r) 
   {
-    super(parent, "");
+    super(parent, " ");
     this.r = r;
   }
 
@@ -108,7 +108,7 @@ public class RectangleCollider extends Collider
 
   public RectangleCollider(Rigidbody parent, PVector size)
   {
-    super(parent, "");
+    super(parent, " ");
     this.size = size;
   }
 
@@ -199,7 +199,7 @@ public class PolygonCollider extends Collider
 
   public PolygonCollider(Rigidbody parent, PVector[] points) 
   {
-    super(parent, "");
+    super(parent, " ");
     this.points = points;
   }
 
@@ -215,7 +215,10 @@ public class PolygonCollider extends Collider
 
   public boolean isColliding(Collider other)
   {
-    if(other.type() == ColliderType.Circle) return collisionWithCircle((CircleCollider)other);
+    if (other.type() == ColliderType.Circle) 
+      return collisionWithCircle((CircleCollider)other);
+    else if(other.type() == ColliderType.Rectangle)
+      return collisionWithRectangle((RectangleCollider)other);
     return false;
   }
 
@@ -248,10 +251,42 @@ public class PolygonCollider extends Collider
     // following code to also test if the center of the
     // circle is inside the polygon
 
-    // boolean centerInside = polygonPoint(vertices, cx,cy);
-    // if (centerInside) return true;
+    boolean centerInside = polygonPoint(points, other.pos().x, other.pos().y);
+    if (centerInside) return true;
 
     // otherwise, after all that, return false
+    return false;
+  }
+
+  boolean collisionWithRectangle(RectangleCollider other)
+  {
+    // go through each of the vertices, plus the next
+    // vertex in the list
+    int next = 0;
+    for (int current=0; current<points.length; current++) {
+
+      // get next vertex in list
+      // if we've hit the end, wrap around to 0
+      next = current+1;
+      if (next == points.length) next = 0;
+
+      // get the PVectors at our current position
+      // this makes our if statement a little cleaner
+      PVector vc = points[current];    // c for "current"
+      PVector vn = points[next];       // n for "next"
+
+      // check against all four sides of the rectangle
+      boolean collision = lineRect(vc.x, vc.y, vn.x, vn.y, 
+          other.pos().x, other.pos().y, other.size.x, other.size.y);
+      if (collision) return true;
+
+      // optional: test if the rectangle is INSIDE the polygon
+      // note that this iterates all sides of the polygon
+      // again, so only use this if you need to
+      //boolean inside = polygonPoint(points, other.pos().x, other.pos().y);
+      //if (inside) return true;
+    }
+
     return false;
   }
 
@@ -259,6 +294,9 @@ public class PolygonCollider extends Collider
   {
   }
 }
+
+
+
 //-----------------------
 //      helper
 //-----------------------
@@ -310,12 +348,6 @@ boolean lineCircle(float x1, float y1, float x2, float y2, float cx, float cy, f
   // if so keep going, but if not, return false
   boolean onSegment = linePoint(x1, y1, x2, y2, closestX, closestY);
   if (!onSegment) return false;
-
-  // optionally, draw a circle at the closest point
-  // on the line
-  fill(255, 0, 0);
-  noStroke();
-  ellipse(closestX, closestY, 20, 20);
 
   // get distance to closest point
   distX = closestX - cx;
@@ -376,4 +408,37 @@ boolean polygonPoint(PVector[] vertices, float px, float py) {
     }
   }
   return collision;
+}
+
+// LINE/RECTANGLE
+boolean lineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh) {
+
+  // check if the line has hit any of the rectangle's sides
+  // uses the Line/Line function below
+  boolean left =   lineLine(x1, y1, x2, y2, rx, ry, rx, ry+rh);
+  boolean right =  lineLine(x1, y1, x2, y2, rx+rw, ry, rx+rw, ry+rh);
+  boolean top =    lineLine(x1, y1, x2, y2, rx, ry, rx+rw, ry);
+  boolean bottom = lineLine(x1, y1, x2, y2, rx, ry+rh, rx+rw, ry+rh);
+
+  // if ANY of the above are true,
+  // the line has hit the rectangle
+  if (left || right || top || bottom) {
+    return true;
+  }
+  return false;
+}
+
+
+// LINE/LINE
+boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+
+  // calculate the direction of the lines
+  float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+  float uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+
+  // if uA and uB are between 0-1, lines are colliding
+  if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+    return true;
+  }
+  return false;
 }

@@ -3,6 +3,7 @@ public class RectCollTest implements Rigidbody
   PVector pos;
   String name;
   PVector size;
+  float speed = 5f;
   
   RectangleCollider collider;
   
@@ -19,7 +20,9 @@ public class RectCollTest implements Rigidbody
   {
     pushStyle();
     rect(pos.x, pos.y, size.x, size.y);
+    pos.x += speed;
     popStyle();
+    if(pos.x > width||pos.x < 0) speed = -speed;
   }
   
   public void onCollision()
@@ -52,13 +55,13 @@ public class PolygonCollTest implements Rigidbody
     this.name = name;
     
     verts = new PVector[8];
-    verts[0] = new PVector(500, 100);
+    verts[0] = new PVector(500, 70);
     verts[1] = new PVector(550, 50);
-    verts[2] = new PVector(600, 100);
+    verts[2] = new PVector(600, 70);
     verts[3] = new PVector(650, 150);
-    verts[4] = new PVector(600, 200);
+    verts[4] = new PVector(600, 230);
     verts[5] = new PVector(550, 250);
-    verts[6] = new PVector(500, 200);
+    verts[6] = new PVector(500, 230);
     verts[7] = new PVector(450, 150);
     
     collider = new PolygonCollider(this, verts);
