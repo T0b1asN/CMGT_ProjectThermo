@@ -2,8 +2,10 @@
 
 public class Enemy implements Rigidbody
 {
-  PVector pos, dir, size;
+  PVector pos, lookDir, shootDir, size;
   float speed = 2f;
+  
+  PVector target;
   
   CircleCollider collider;
   
@@ -12,28 +14,51 @@ public class Enemy implements Rigidbody
     this.pos = pos;
     this.size = size;
     collider = new CircleCollider(this, size.mag()/2f, "enemy");
-    dir = PVector.sub(pos,p.getPos());
-    dir.normalize();
+    lookDir = PVector.sub(pos,p.getPos());
+    lookDir.normalize();
+    
+    shootDir = PVector.sub(pos, p.getPos());
+    shootDir.normalize();
+    
+    target = new PVector();
   }
   
   public void show()
   {
-    dir = PVector.lerp(PVector.sub(p.getPos(), pos), dir, 0.995f);
-    dir.normalize();
+    calcTarget();
+    
+    lookDir = PVector.sub(target, pos);
+    lookDir.normalize();
+    
+    shootDir = PVector.sub(p.getPos(), pos);
+    shootDir.normalize();
+    
     pushMatrix();
     translate(pos.x, pos.y);
-    rotate(-atan2(dir.x, dir.y));
+    rotate(-atan2(shootDir.x, shootDir.y));
     
     pushStyle();
     fill(200,200,150);
-    rect(-size.x/2f, -size.y/2f, size.x, size.y);
+    //rect(-size.x/2f, -size.y/2f, size.x, size.y);
+    triangle(0, size.y/2f, size.x/2f, -size.y/2f, -size.x/2f, -size.y/2f);
     popStyle();
     popMatrix();
   }
   
   void move()
   {
-    pos.add(PVector.mult(dir, speed));
+    if(pos.dist(target) > speed*2f)
+      pos.add(PVector.mult(lookDir, speed));
+  }
+  
+  void calcTarget()
+  {
+    PVector ret = PVector.sub(p.getPos(), pos);
+    float mag = ret.mag();
+    ret.normalize();
+    
+    target = PVector.add(pos, ret.mult(mag-250));
+    circle(target.x, target.y, 25f);
   }
   
   //Rigidbody

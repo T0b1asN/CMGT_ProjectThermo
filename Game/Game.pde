@@ -16,7 +16,7 @@ void setup()
   ui = new GameUI();
   
   p = new Player();
-  e = new Enemy(new PVector(100, 100), new PVector(50f, 50f));
+  e = new Enemy(new PVector(random(50f, width-50f), random(50f, height-50f)), new PVector(50f, 50f));
 }
 
 void draw()
