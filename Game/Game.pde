@@ -1,32 +1,37 @@
 Player p;
-RectCollTest r;
-PolygonCollTest t;
 GameUI ui;
+Enemy e;
+
+boolean fullscreen = true;
 
 void setup()
 {
-  //fullScreen();
-  size(800,800);
+  fullScreen();
+  //size(800,800);
   
+  initMouse();
   initKeys();
   initCollisions();
   
   ui = new GameUI();
   
   p = new Player();
-  r = new RectCollTest(new PVector(100,100), new PVector(100,100), "box");
-  t = new PolygonCollTest(new PVector(0, 0), "polygon");
+  e = new Enemy(new PVector(100, 100), new PVector(50f, 50f));
 }
 
 void draw()
 {
   background(0);
+  handleMouse();
   handleKeys();
   handleCollisions();
   
   p.show();
-  r.show();
-  t.show();
+  e.show();
+  
+  e.move();
   
   ui.show();
+  
+  debugCollisions();
 }

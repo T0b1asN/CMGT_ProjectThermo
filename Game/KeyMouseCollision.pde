@@ -51,6 +51,17 @@ enum KEYS
 //     MouseHandler
 // ---------------------------------------
 boolean mouse = false;
+PVector mouseVec;
+
+void initMouse()
+{
+  mouseVec = new PVector(mouseX, mouseY);
+}
+
+void handleMouse()
+{
+  mouseVec.set(mouseX, mouseY);
+}
 
 void mousePressed()
 {
@@ -67,6 +78,8 @@ void mouseReleased()
 //      CollisionHandler
 // ---------------------------------------
 ArrayList<Collider> coll;
+
+boolean debug_showHitboxes = true;
 
 void initCollisions()
 {
@@ -88,6 +101,20 @@ void handleCollisions()
     }
     ((Collider)coll.get(i)).checkWall();
   }
+}
+
+void debugCollisions()
+{
+  if(!debug_showHitboxes) return;
+  pushStyle();
+  noFill();
+  stroke(255,0,0);
+  strokeWeight(5);
+  for(Collider c : coll)
+  {
+    c.debug_show();
+  }
+  popStyle();
 }
 
 void addCollider(Collider col)

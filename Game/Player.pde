@@ -3,7 +3,7 @@
 public class Player implements Rigidbody
 {
   PVector pos, dir;
-  float speed = 5f;
+  float speed = 7f;
   
   ArrayList<Bullet> bullets;
   
