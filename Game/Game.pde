@@ -1,42 +1,57 @@
 Player p;
 GameUI ui;
-Enemy e1, e2;
+//Enemy e1, e2;
 
-boolean fullscreen = true;
+boolean debug = false;
 
 void setup()
 {
   //fullScreen();
-  size(800, 800, P2D);
+  size(800, 800);
+  
+  //if desired enter debug mode
+  if(debug) debugMode();
 
+  //initialize the mouse, the keyboard and collisions
   initMouse();
   initKeys();
   initCollisions();
-
-  ui = new GameUI();
-
+  
+  //create the player
   p = new Player();
-  e1 = new Enemy(new PVector(random(50f, width-50f), random(50f, height-50f)), 
-    new PVector(50f, 50f));
-  e2 = new Enemy(new PVector(random(50f, width-50f), random(50f, height-50f)), 
-    new PVector(50f, 50f));
+  
+  //initialize the enemy handler
+  //CRUCIAL: do this after creating the player
+  initEnemyHandler();
+  
+  //create the game ui
+  //CRUCIAL: do this after creating the player
+  ui = new GameUI();
 }
 
 void draw()
 {
   background(0);
+  //handle mouse input
   handleMouse();
+  //handle keyboard input
   handleKeys();
+  //handle collisions
   handleCollisions();
+  //handle enemies (showing, moving, spawning)
+  handleEnemies();
 
+  //show the player
   p.show();
-  e1.show();
-  e2.show();
 
-  e1.move();
-  e2.move();
-
-  ui.show();
-
+  //if in debug mode, draw all colliders
   debugCollisions();
+
+  //show the ui
+  ui.show();
+}
+
+void debugMode()
+{
+  debug_showHitboxes = true;
 }

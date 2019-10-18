@@ -15,6 +15,8 @@ public class Player implements Rigidbody
   
   CircleCollider collider;
   
+  int maxHealth = 60, health = maxHealth;
+  
   public Player()
   {
     pos = new PVector(width/2f, height/2f);
@@ -29,7 +31,7 @@ public class Player implements Rigidbody
 
   public Player(PVector pos)
   {
-    this.pos = pos;
+    this.pos = copy(pos);
     dir = new PVector();
     moveDir = new PVector();
     
@@ -105,7 +107,7 @@ public class Player implements Rigidbody
   void onMouseDown()
   {
     //shoot
-    Bullet n = new Bullet(this.pos, this.dir, 7f, bulletTag);
+    Bullet n = new Bullet(this.pos, this.dir, 9f, bulletTag, color(0,0,255));
     bullets.add(n);
     count++;
   }
@@ -113,10 +115,11 @@ public class Player implements Rigidbody
   //Rigidbody
   public void onCollision(Collider other)
   {
-    if(other.tag == Enemy.bulletTag)
-    {
-      println("Player was hit");
+    if(other.tag == Enemy.bulletTag) {
+      health -= 2;
       ((Bullet)other.parent).kill();
+    } else if(other.tag == Enemy.tag) {
+      health -= 10;
     }
   }
   
@@ -128,5 +131,10 @@ public class Player implements Rigidbody
   public PVector getPos()
   {
     return pos;
+  }
+  
+  public void onDestroy()
+  {
+    collider.onDestroy();
   }
 }

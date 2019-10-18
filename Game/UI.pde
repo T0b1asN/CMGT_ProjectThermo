@@ -1,8 +1,6 @@
 public class GameUI
 {
   PFont font;
-  int maxHealth = 5;
-  int health = 5;
   public GameUI()
   {
     font = loadFont("Bahnschrift-128.vlw");
@@ -21,21 +19,23 @@ public class GameUI
   
   void drawHealth()
   {
-    if(health > maxHealth) health = maxHealth;
+    int drawCircles = round(p.health / 10f);
+    int maxCircles = round(p.maxHealth / 10f);
+    if(drawCircles < 0) drawCircles = 0;
     
     pushStyle();
     fill(255,0,0);
     stroke(255,0,0);
     strokeWeight(5);
-    for(int i = 0; i < health; i++)
+    for(int i = 0; i < drawCircles; i++)
     {
       float x = width - spacing / 2f - spacing * i;
       circle(x, height - spacing / 2f, r * 2);
     }
     noFill();
-    for(int i = 0; i < maxHealth - health; i ++)
+    for(int i = 0; i < maxCircles - drawCircles; i ++)
     {
-      float x = width - spacing / 2f - spacing * health - spacing * i;
+      float x = width - spacing / 2f - spacing * drawCircles - spacing * i;
       circle(x, height - spacing / 2f, r * 2);
     }
     popStyle();

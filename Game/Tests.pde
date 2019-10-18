@@ -39,4 +39,9 @@ public class RectCollTest implements Rigidbody
   {
     return pos;
   }
+  
+  void onDestroy()
+  {
+    collider.onDestroy();
+  }
 }

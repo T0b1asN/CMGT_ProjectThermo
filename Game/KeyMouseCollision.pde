@@ -79,7 +79,7 @@ void mouseReleased()
 // ---------------------------------------
 ArrayList<Collider> coll;
 
-boolean debug_showHitboxes = true;
+boolean debug_showHitboxes = false;
 
 void initCollisions()
 {
