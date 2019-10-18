@@ -5,9 +5,14 @@ public class Enemy implements Rigidbody
   PVector pos, lookDir, shootDir, size;
   float speed = 2f;
   
+  int startValue = 60, timer = startValue;
+  
   PVector target;
   
   CircleCollider collider;
+  
+  ArrayList<Bullet> bullets;
+  final static String bulletTag = "bulletE";
   
   public Enemy(PVector pos, PVector size)
   {
@@ -21,6 +26,9 @@ public class Enemy implements Rigidbody
     shootDir.normalize();
     
     target = new PVector();
+    
+    bullets = new ArrayList<Bullet>();
+    collider.ignoreCollision(bulletTag);
   }
   
   public void show()
@@ -43,6 +51,34 @@ public class Enemy implements Rigidbody
     triangle(0, size.y/2f, size.x/2f, -size.y/2f, -size.x/2f, -size.y/2f);
     popStyle();
     popMatrix();
+    
+    ArrayList<Bullet> found = new ArrayList<Bullet>();
+    for(Bullet b : bullets)
+    {
+      if(b.isDead()) {
+        found.add(b);
+        b.onDestroy();
+      }
+      else {
+        b.move();
+        b.show();
+      }
+    }
+    bullets.removeAll(found);
+    
+    timer--;
+    if(timer <= 0)
+    {
+      timer = startValue;
+      shoot();
+    }
+  }
+  
+  void shoot()
+  {
+    println("Shoot");
+    Bullet n = new Bullet(this.pos, this.shootDir, 7f, bulletTag);
+    bullets.add(n);
   }
   
   void move()
@@ -62,7 +98,7 @@ public class Enemy implements Rigidbody
   }
   
   //Rigidbody
-  public void onCollision()
+  public void onCollision(String tag)
   {
     println("enemy was hit");
   }

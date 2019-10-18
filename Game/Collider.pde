@@ -26,9 +26,9 @@ public abstract class Collider
     ignoreCollision.add(tag);
   }
 
-  public void notifyCollision()
+  public void notifyCollision(String tag)
   {
-    parent.onCollision();
+    parent.onCollision(tag);
   }
 
   public PVector pos()
@@ -77,10 +77,6 @@ public class CircleCollider extends Collider
       ret = collisionWithCircle((CircleCollider)other);
     } else if (other.type() == ColliderType.Rectangle) {
       ret = collisionWithRectangle((RectangleCollider)other);
-    }
-    if (ret)
-    {
-      notifyCollision();
     }
     return ret;
   }
@@ -145,10 +141,6 @@ public class RectangleCollider extends Collider
       ret = collisionWithCircle((CircleCollider)other);
     } else if (other.type() == ColliderType.Rectangle) {
       ret = collisionWithRectangle((RectangleCollider)other);
-    }
-    if (ret)
-    {
-      notifyCollision();
     }
     return ret;
   }

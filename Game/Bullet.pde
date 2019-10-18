@@ -7,6 +7,7 @@ public class Bullet implements Rigidbody
   int id;
   
   final String col_tag = "bullet";
+  String tag;
   final float r = 5f;
   
   public Bullet(PVector pos, PVector dir, float speed, int id)
@@ -14,10 +15,20 @@ public class Bullet implements Rigidbody
     this.pos = new PVector(pos.x, pos.y);
     this.v = PVector.mult(dir, speed);
     
-    collider = new CircleCollider(this, r, col_tag);
-    collider.ignoreCollision(col_tag);
-    collider.ignoreCollision(Player.collisionTag);
+    tag = col_tag;
+    collider = new CircleCollider(this, r, tag);
+    collider.ignoreCollision(tag);
     this.id = id;
+  }
+  
+  public Bullet(PVector pos, PVector dir, float speed, String tag)
+  {
+    this.pos = new PVector(pos.x, pos.y);
+    this.v = PVector.mult(dir, speed);
+    
+    this.tag = tag;
+    collider = new CircleCollider(this, r, tag);
+    collider.ignoreCollision(tag);
   }
   
   void move()
@@ -39,7 +50,7 @@ public class Bullet implements Rigidbody
     popStyle();
   }
   
-  void onCollision()
+  void onCollision(String tag)
   {
     //println(id + " bullet has collided with something");
   }

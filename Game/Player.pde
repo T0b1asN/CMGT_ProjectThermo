@@ -6,6 +6,7 @@ public class Player implements Rigidbody
   float speed = 7f;
   
   ArrayList<Bullet> bullets;
+  final String bulletTag = "bulletP";
   
   int count = 0;
   
@@ -22,6 +23,7 @@ public class Player implements Rigidbody
     bullets = new ArrayList<Bullet>();
     
     collider = new CircleCollider(this, r, collisionTag);
+    collider.ignoreCollision(bulletTag);
   }
 
   public Player(PVector pos)
@@ -90,15 +92,16 @@ public class Player implements Rigidbody
   void onMouseDown()
   {
     //shoot
-    Bullet n = new Bullet(this.pos, this.dir, 7f, count);
+    Bullet n = new Bullet(this.pos, this.dir, 7f, bulletTag);
     bullets.add(n);
     count++;
   }
   
   //Rigidbody
-  public void onCollision()
+  public void onCollision(String tag)
   {
-    println("Player had collision");
+    if(tag == Enemy.bulletTag)
+      println("Player was hit");
   }
   
   public void onWall()
