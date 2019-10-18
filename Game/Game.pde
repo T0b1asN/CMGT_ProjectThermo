@@ -7,7 +7,7 @@ boolean fullscreen = true;
 void setup()
 {
   //fullScreen();
-  size(800, 800);
+  size(800, 800, P2D);
 
   initMouse();
   initKeys();

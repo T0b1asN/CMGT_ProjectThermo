@@ -2,11 +2,11 @@
 
 public class Player implements Rigidbody
 {
-  PVector pos, dir;
+  PVector pos, dir, moveDir;
   float speed = 7f;
   
   ArrayList<Bullet> bullets;
-  final String bulletTag = "bulletP";
+  public static final String bulletTag = "bulletP";
   
   int count = 0;
   
@@ -19,6 +19,7 @@ public class Player implements Rigidbody
   {
     pos = new PVector(width/2f, height/2f);
     dir = new PVector();
+    moveDir = new PVector();
     
     bullets = new ArrayList<Bullet>();
     
@@ -30,8 +31,12 @@ public class Player implements Rigidbody
   {
     this.pos = pos;
     dir = new PVector();
+    moveDir = new PVector();
     
     bullets = new ArrayList<Bullet>();
+    
+    collider = new CircleCollider(this, r, collisionTag);
+    collider.ignoreCollision(bulletTag);
   }
 
   void move(PVector v)
@@ -53,6 +58,8 @@ public class Player implements Rigidbody
     
     //add the new velocity
     pos.add(v);
+    if(v.x > 0f || v.y > 0f || v.x < 0f || v.y < 0f)
+      moveDir.set(v.x, v.y).normalize();
   }
 
   void show()
@@ -64,7 +71,13 @@ public class Player implements Rigidbody
     //draw everything
     pushStyle();
     fill(255);
-    circle(pos.x, pos.y, r*2);
+    pushMatrix();
+    translate(pos.x, pos.y);
+    rotate(-atan2(moveDir.x, moveDir.y));
+    triangle(-r, -r, 0, r, r, -r);
+    //circle(pos.x, pos.y, r*2);
+    
+    popMatrix();
     PVector dir_temp = new PVector(dir.x, dir.y);
     stroke(255);
     strokeWeight(5);
@@ -98,10 +111,13 @@ public class Player implements Rigidbody
   }
   
   //Rigidbody
-  public void onCollision(String tag)
+  public void onCollision(Collider other)
   {
-    if(tag == Enemy.bulletTag)
+    if(other.tag == Enemy.bulletTag)
+    {
       println("Player was hit");
+      ((Bullet)other.parent).kill();
+    }
   }
   
   public void onWall()

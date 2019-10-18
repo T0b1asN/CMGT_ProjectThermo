@@ -96,8 +96,8 @@ void handleCollisions()
       {
         Collider left = (Collider)coll.get(i);
         Collider right = (Collider)coll.get(j);
-        left.notifyCollision(right.tag);
-        right.notifyCollision(left.tag);
+        left.notifyCollision(right);
+        right.notifyCollision(left);
       }
     }
     ((Collider)coll.get(i)).checkWall();

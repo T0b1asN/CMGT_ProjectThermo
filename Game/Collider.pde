@@ -26,9 +26,9 @@ public abstract class Collider
     ignoreCollision.add(tag);
   }
 
-  public void notifyCollision(String tag)
+  public void notifyCollision(Collider other)
   {
-    parent.onCollision(tag);
+    parent.onCollision(other);
   }
 
   public PVector pos()

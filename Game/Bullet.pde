@@ -50,12 +50,17 @@ public class Bullet implements Rigidbody
     popStyle();
   }
   
-  void onCollision(String tag)
+  void onCollision(Collider other)
   {
-    //println(id + " bullet has collided with something");
+    
   }
   
   void onWall()
+  {
+    isDead = true;
+  }
+  
+  void kill()
   {
     isDead = true;
   }

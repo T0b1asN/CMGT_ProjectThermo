@@ -25,7 +25,7 @@ public class RectCollTest implements Rigidbody
     if(pos.x > width||pos.x < 0) speed = -speed;
   }
   
-  public void onCollision(String tag)
+  public void onCollision(Collider other)
   {
     println(name+" had collision");
   }

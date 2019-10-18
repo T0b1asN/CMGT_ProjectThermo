@@ -29,6 +29,7 @@ public class Enemy implements Rigidbody
     
     bullets = new ArrayList<Bullet>();
     collider.ignoreCollision(bulletTag);
+    timer = (int)random(startValue);
   }
   
   public void show()
@@ -76,7 +77,6 @@ public class Enemy implements Rigidbody
   
   void shoot()
   {
-    println("Shoot");
     Bullet n = new Bullet(this.pos, this.shootDir, 7f, bulletTag);
     bullets.add(n);
   }
@@ -98,9 +98,15 @@ public class Enemy implements Rigidbody
   }
   
   //Rigidbody
-  public void onCollision(String tag)
+  public void onCollision(Collider other)
   {
-    println("enemy was hit");
+    if(other.tag == Player.bulletTag) {
+      println("enemy was hit by bullet");
+      ((Bullet)other.parent).kill();
+    } else if(other.tag == Player.collisionTag) {
+      println("Player hit enemy");
+    }
+    //println("enemy was hit by " + other.tag);
   }
   
   public void onWall()
