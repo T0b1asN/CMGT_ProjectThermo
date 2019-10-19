@@ -4,6 +4,8 @@
 // -------------------
 
 1 make main game loop a class, that takes care of all of the enemies and the player, etc.
+  1.1 make that elements of game (player, enemies, etc.) only get initialized after the main menu
+      and that they get destroyed when the game ends
 2 make render handler
 3 finish state system
 
