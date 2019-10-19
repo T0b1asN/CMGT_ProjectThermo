@@ -1,3 +1,6 @@
+// only for tests, so no comments
+
+
 public class RectCollTest implements Rigidbody
 {
   PVector pos;
