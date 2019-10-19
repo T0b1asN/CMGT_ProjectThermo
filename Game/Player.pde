@@ -1,5 +1,5 @@
 //the Player class, which implements the Rigidbody interface, because it needs a Collider
-public class Player implements Rigidbody
+public class Player implements Rigidbody, MouseEnabled
 {
   //the position of the player
   PVector pos;
@@ -45,6 +45,8 @@ public class Player implements Rigidbody
     collider = new CircleCollider(this, r, collisionTag);
     //ignore collision with the players bullets
     collider.ignoreCollision(bulletTag);
+    
+    addMouseEnabled(this);
   }
 
   //the constructor with a parameter for position
@@ -143,7 +145,7 @@ public class Player implements Rigidbody
   }
   
   //called when the mouse is pressed down
-  void onMouseDown()
+  void onMouseClick()
   {
     //shoot by instantiating a new bullet
     Bullet n = new Bullet(this.pos, this.dir, 9f, bulletTag, color(0,0,255));

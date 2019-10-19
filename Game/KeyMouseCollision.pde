@@ -76,10 +76,13 @@ boolean mouse = false;
 //when calculating stuff with the mouse position
 PVector mouseVec;
 
+ArrayList<MouseEnabled> mEnabled;
+
 //initialize mouse handling by creating mouseVec
 void initMouse()
 {
   mouseVec = new PVector(mouseX, mouseY);
+  mEnabled = new ArrayList<MouseEnabled>();
 }
 
 //handle mouse input by setting the mouseVec to mouseX and mouseY
@@ -92,9 +95,20 @@ void handleMouse()
 void mousePressed()
 {
   //notify the player
-  p.onMouseDown();
+  for(MouseEnabled m : mEnabled) m.onMouseClick();
+  //p.onMouseClick();
   //set mouse to true
   mouse = true;
+}
+
+void addMouseEnabled(MouseEnabled m)
+{
+  mEnabled.add(m);
+}
+
+void removeMouseEnabled(MouseEnabled m)
+{
+  mEnabled.remove(m);
 }
 
 //called when the mouse is released

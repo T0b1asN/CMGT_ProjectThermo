@@ -16,3 +16,18 @@ interface Rigidbody
   //returns the position of the Rigidbody
   public PVector getPos();
 }
+
+interface MouseEnabled
+{
+  public void onMouseClick();
+}
+
+interface Renderable
+{
+  
+}
+
+interface ButtonEnabled
+{
+  public void onButtonClick(String buttonID);
+}

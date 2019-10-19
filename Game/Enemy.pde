@@ -175,6 +175,11 @@ public class Enemy implements Rigidbody
   void onDestroy()
   {
     collider.onDestroy();
+    //TODO: maybe handle differently
+    for(Bullet b : bullets)
+    {
+      b.onDestroy();
+    }
   }
   
   void showHealthBar()

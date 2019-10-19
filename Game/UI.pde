@@ -71,15 +71,46 @@ public class GameUI
       
       //TODO: no rounded edges for the line
       pushStyle();
-      strokeWeight(healthHeight);
-      stroke(255, 0, 0);
-      line(healthRight.x-healthWidth, healthRight.y, healthRight.x, healthRight.y);
+      //strokeWeight(healthHeight);
+      fill(255, 0, 0);
+      noStroke();
+      rect(healthRight.x-healthWidth, healthRight.y-healthHeight/2f, healthWidth, healthHeight);
       if (perc > 0f)
       {
-        stroke(0, 255, 0);
-        line(healthRight.x - actWidth, healthRight.y, healthRight.x, healthRight.y);
+        fill(0, 255, 0);
+        rect(healthRight.x - actWidth, healthRight.y-healthHeight/2f, actWidth, healthHeight);
       }
       popStyle();
+    }
+  }
+}
+
+public class MainMenu implements ButtonEnabled
+{
+  static final String startButtonID = "start";
+  Button startButton;
+  
+  boolean startGame = false;
+  
+  public MainMenu()
+  {
+    startButton = new Button(this, startButtonID,
+      new PVector(width/2f-100f, height/2f-50f),
+      new PVector(200f, 100f));
+  }
+  
+  public boolean run()
+  {
+    background(0);
+    startButton.show();
+    return !startGame;
+  }
+  
+  public void onButtonClick(String buttonID)
+  {
+    if(buttonID == startButtonID) {
+      println("start game");
+      startGame = true;
     }
   }
 }
