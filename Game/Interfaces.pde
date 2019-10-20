@@ -24,7 +24,7 @@ interface MouseEnabled
 
 interface Renderable
 {
-  
+  public void show();
 }
 
 interface ButtonEnabled

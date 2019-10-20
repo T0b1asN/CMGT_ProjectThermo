@@ -54,7 +54,6 @@ public class Enemy implements Rigidbody
     collider = new CircleCollider(this, size.mag()/2f, tag);
     
     //calculate initial move direction (points to player) and normalize it
-    println(game==null);
     moveDir = PVector.sub(pos, game.getP().getPos());
     moveDir.normalize();
     

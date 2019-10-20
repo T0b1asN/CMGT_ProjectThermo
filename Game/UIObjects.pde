@@ -24,6 +24,11 @@ public class Button implements MouseEnabled
     addMouseEnabled(this);
   }
   
+  public void resetMouseEnabled()
+  {
+    addMouseEnabled(this);
+  }
+  
   Button setNormalC(color c)
   {
     normalColor = c;

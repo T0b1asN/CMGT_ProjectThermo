@@ -96,7 +96,8 @@ public class MainMenu implements ButtonEnabled
   {
     startButton = new Button(this, startButtonID,
       new PVector(width/2f-100f, height/2f-50f),
-      new PVector(200f, 100f));
+      new PVector(200f, 100f))
+      .setText("Start Game");
   }
   
   boolean isEnabled = true;
@@ -122,6 +123,13 @@ public class MainMenu implements ButtonEnabled
       startGame = true;
     }
   }
+  
+  public void reset()
+  {
+    isEnabled = true;
+    startGame = false;
+    startButton.resetMouseEnabled();
+  }
 }
 
 public class DeathMenu implements ButtonEnabled
@@ -129,8 +137,8 @@ public class DeathMenu implements ButtonEnabled
   Button closeButton;
   private static final String closeButtonID = "close";
   
-  Button restartButton;
-  private static final String restartButtonID = "restart";
+  Button menuButton;
+  private static final String menuButtonID = "restart";
   
   public DeathMenu()
   {
@@ -138,26 +146,25 @@ public class DeathMenu implements ButtonEnabled
       new PVector(width/2f - 150f, height/2f - 100f),
       new PVector(300f, 100f))
       .setText("Close");
-    restartButton = new Button(this, restartButtonID, 
+    menuButton = new Button(this, menuButtonID, 
       new PVector(width/2f - 100f, height/2f + 150f),
       new PVector(200f, 100f))
-      .setText("Restart");
+      .setText("Main Menu");
   }
   
   public void show()
   {
     background(0);
     closeButton.show();
-    restartButton.show();
+    menuButton.show();
   }
   
   public void onButtonClick(String id)
   {
-    println(id);
     if(id == closeButtonID) {
-      println("game should be closed!");
-    } else if(id == restartButtonID) {
-      println("game should be restarted");
+      exit();
+    } else if(id == menuButtonID) {
+      reset();
     }
   }
   

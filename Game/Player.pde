@@ -27,7 +27,7 @@ public class Player implements Rigidbody, MouseEnabled
   CircleCollider collider;
   
   //the players health
-  int maxHealth = 2, health = maxHealth;
+  int maxHealth = 60, health = maxHealth;
   
   //default constructor for the player
   public Player()

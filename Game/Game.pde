@@ -3,19 +3,18 @@
  //         TODO
  // -------------------
  
- 1 make main game loop a class, that takes care of all of the enemies and the player, etc.
- 1.1 make that elements of game (player, enemies, etc.) only get initialized after the main menu
- and that they get destroyed when the game ends
- 2 make render handler
- 3 finish state system
+ 1 Score
+ 2 Gameplay
+ 2.1 bomb
+ 2.2 enemy AI
+ 2.2.1 AI aims at whats nearer (bomb or player)
+ 2.3 different enemies
+ 10000 make render handler
  
  // -------------------
  //     END OF TODO
  // -------------------
  */
-
-
-//Enemy e1, e2;
 
 boolean debug = false;
 
@@ -25,15 +24,15 @@ DeathMenu deathMenu;
 
 enum GameState
 {
-  MAINMENU, PLAY, PAUSE, DIE, WIN
+  MAINMENU, PLAY, DIE
 }
 
 GameState state;
 
 void setup()
 {
-  //fullScreen();
-  size(800, 800);
+  fullScreen();
+  //size(800, 800);
 
   //if desired enter debug mode
   if (debug) debugMode();
@@ -48,6 +47,19 @@ void setup()
   state = GameState.MAINMENU;
 }
 
+void reset()
+{
+  //initialize the mouse, the keyboard and collisions
+  initMouse();
+  initKeys();
+  initCollisions();
+  
+  menu.reset();
+  deathMenu = null;
+  game = null;
+  state = GameState.MAINMENU;
+}
+
 void draw()
 {
   switch(state)
@@ -58,12 +70,8 @@ void draw()
   case PLAY:
     mainGame();
     break;
-  case PAUSE:
-    break;
   case DIE:
     dieState();
-    break;
-  case WIN:
     break;
   default:
     break;
