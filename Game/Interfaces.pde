@@ -30,4 +30,6 @@ interface Renderable
 interface ButtonEnabled
 {
   public void onButtonClick(String buttonID);
+  
+  public boolean isEnabled();
 }

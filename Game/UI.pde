@@ -45,8 +45,8 @@ public class GameUI
       //amount of circles is representation of maxHealth of the player
       //amount of these circles filled in, is the amount of health, the player has left
 
-      int drawCircles = round(p.health / 10f);
-      int maxCircles = round(p.maxHealth / 10f);
+      int drawCircles = round(game.getP().health / 10f);
+      int maxCircles = round(game.getP().maxHealth / 10f);
       if (drawCircles < 0) drawCircles = 0;
 
       pushStyle();
@@ -66,7 +66,7 @@ public class GameUI
       }
       popStyle();
     } else {
-      float perc = (float)p.health/(float)p.maxHealth;
+      float perc = (float)game.getP().health/(float)game.getP().maxHealth;
       float actWidth = perc * healthWidth;
       
       //TODO: no rounded edges for the line
@@ -99,6 +99,15 @@ public class MainMenu implements ButtonEnabled
       new PVector(200f, 100f));
   }
   
+  boolean isEnabled = true;
+  
+  public void setEnabled(boolean newState)
+  {
+    isEnabled = newState;
+  }
+  
+  public boolean isEnabled() { return isEnabled; }
+  
   public boolean run()
   {
     background(0);
@@ -113,4 +122,50 @@ public class MainMenu implements ButtonEnabled
       startGame = true;
     }
   }
+}
+
+public class DeathMenu implements ButtonEnabled
+{
+  Button closeButton;
+  private static final String closeButtonID = "close";
+  
+  Button restartButton;
+  private static final String restartButtonID = "restart";
+  
+  public DeathMenu()
+  {
+    closeButton = new Button(this, closeButtonID, 
+      new PVector(width/2f - 150f, height/2f - 100f),
+      new PVector(300f, 100f))
+      .setText("Close");
+    restartButton = new Button(this, restartButtonID, 
+      new PVector(width/2f - 100f, height/2f + 150f),
+      new PVector(200f, 100f))
+      .setText("Restart");
+  }
+  
+  public void show()
+  {
+    background(0);
+    closeButton.show();
+    restartButton.show();
+  }
+  
+  public void onButtonClick(String id)
+  {
+    println(id);
+    if(id == closeButtonID) {
+      println("game should be closed!");
+    } else if(id == restartButtonID) {
+      println("game should be restarted");
+    }
+  }
+  
+  boolean isEnabled = true;
+  public void setEnabled(boolean newState)
+  {
+    isEnabled = newState;
+  }
+  
+  public boolean isEnabled() { return isEnabled; }
 }

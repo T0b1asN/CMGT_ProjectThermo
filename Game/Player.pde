@@ -27,7 +27,7 @@ public class Player implements Rigidbody, MouseEnabled
   CircleCollider collider;
   
   //the players health
-  int maxHealth = 60, health = maxHealth;
+  int maxHealth = 2, health = maxHealth;
   
   //default constructor for the player
   public Player()
@@ -150,6 +150,11 @@ public class Player implements Rigidbody, MouseEnabled
     //shoot by instantiating a new bullet
     Bullet n = new Bullet(this.pos, this.dir, 9f, bulletTag, color(0,0,255));
     bullets.add(n);
+  }
+  
+  public boolean isDead()
+  {
+    return health <= 0;
   }
   
   //Rigidbody

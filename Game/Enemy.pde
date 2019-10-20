@@ -54,11 +54,12 @@ public class Enemy implements Rigidbody
     collider = new CircleCollider(this, size.mag()/2f, tag);
     
     //calculate initial move direction (points to player) and normalize it
-    moveDir = PVector.sub(pos,p.getPos());
+    println(game==null);
+    moveDir = PVector.sub(pos, game.getP().getPos());
     moveDir.normalize();
     
     //calculate initial shoot direction (points to player) and normalize it
-    shootDir = PVector.sub(pos, p.getPos());
+    shootDir = PVector.sub(pos, game.getP().getPos());
     shootDir.normalize();
     
     //initialize target
@@ -88,7 +89,7 @@ public class Enemy implements Rigidbody
     moveDir.normalize();
     
     //calculate the shoot direction (points to player)
-    shootDir = PVector.sub(p.getPos(), pos);
+    shootDir = PVector.sub(game.getP().getPos(), pos);
     shootDir.normalize();
     
     pushMatrix();
@@ -158,7 +159,7 @@ public class Enemy implements Rigidbody
   void calcTarget()
   {
     //get the vector between the players position and the enemys position
-    PVector ret = PVector.sub(p.getPos(), pos);
+    PVector ret = PVector.sub(game.getP().getPos(), pos);
     //get the distance between the player and the enemy and save it
     float mag = ret.mag();
     //normalize the vector between player and enemy, giving the vector between them

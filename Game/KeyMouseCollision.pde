@@ -31,7 +31,7 @@ void handleKeys()
   //normalize the movement, so that the player can't move faster diagonally
   move.normalize();
   //call the players move function with the calculated movement
-  p.move(move);
+  game.getP().move(move);
 }
 
 //called for every key pressed
@@ -188,4 +188,11 @@ void addCollider(Collider col)
 void removeCollider(Collider col)
 {
   this.col.remove(col);
+}
+
+String debug_getCollisionHandlingInfo()
+{
+  String info = "";
+  info += "Active collider: " + col.size();
+  return info;
 }

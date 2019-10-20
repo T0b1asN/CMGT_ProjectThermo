@@ -50,7 +50,7 @@ public class Button implements MouseEnabled
   
   public void onMouseClick()
   {
-    if(mouseInRect(pos, size))
+    if(parent.isEnabled() && mouseInRect(pos, size))
     {
       parent.onButtonClick(buttonID);
     }

@@ -88,6 +88,22 @@ void enemyTimer()
   }
 }
 
+void cleanupEnemies()
+{
+  for(Enemy e : enemies)
+  {
+    e.onDestroy();
+  }
+  enemies.clear();
+}
+
+String debug_getEnemyHandlerInfo()
+{
+  String info = "";
+  info += "Enemy count: " + enemies.size();
+  return info;
+}
+
 //spawn variation 1
 void enemySpawn_Var1()
 {
