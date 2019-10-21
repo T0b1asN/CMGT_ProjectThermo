@@ -3,12 +3,13 @@
  //         TODO
  // -------------------
  
- 1 Score
- 2 Gameplay
- 2.1 bomb
- 2.2 enemy AI
- 2.2.1 AI aims at whats nearer (bomb or player)
- 2.3 different enemies
+ 0 show score in the death menu
+ 1 Gameplay
+ 1.1 enemy AI
+ 1.1.1 AI aims at whats nearer (bomb or player)
+ ...
+ 5000 highscore system
+ ...
  10000 make render handler
  
  // -------------------
@@ -31,8 +32,8 @@ GameState state;
 
 void setup()
 {
-  fullScreen();
-  //size(800, 800);
+  //fullScreen();
+  size(800, 800);
 
   //if desired enter debug mode
   if (debug) debugMode();
@@ -53,7 +54,7 @@ void reset()
   initMouse();
   initKeys();
   initCollisions();
-  
+
   menu.reset();
   deathMenu = null;
   game = null;
@@ -90,7 +91,7 @@ void mainMenu()
 
 void mainGame()
 {
-  if(!game.run())
+  if (!game.run())
   {
     state = GameState.DIE;
     deathMenu = new DeathMenu();
@@ -99,7 +100,6 @@ void mainGame()
 
 void dieState()
 {
-  background(0);
   deathMenu.show();
 }
 
@@ -112,12 +112,26 @@ public class MainGame
 {
   Player p;
   GameUI ui;
+
+  Bomb b;
+
+  int score = 0;
+
+  //bomb animation
+  int bomb_frameCount = 90;
+  float bomb_maxRadius;
+  float bomb_radius;
+  float bomb_speed;
+  boolean bomb_isPlaying = false;
+
   public MainGame()
   {
     //create the player
     p = new Player();
     //seems redundant but is REALLY important
     game = this;
+
+    b = new Bomb();
 
     //create the game ui
     //CRUCIAL: do this after creating the player
@@ -126,38 +140,74 @@ public class MainGame
     //initialize the enemy handler
     //CRUCIAL: do this after creating the player
     initEnemyHandler();
+
+    score = 0;
+
+    bomb_maxRadius = (new PVector(width, height)).mag();
+    bomb_radius = b.size.x > b.size.y ? b.size.x : b.size.y;
+    bomb_speed = bomb_maxRadius / (float)bomb_frameCount;
+    bomb_isPlaying = false;
   }
-  
-  public Player getP() { if(p == null) return p = new Player(); else return p; }
+
+  public Player getP() { 
+    if (p == null) return p = new Player(); 
+    else return p;
+  }
+
+  public void increaseScore(int amount) { 
+    score += amount;
+  }
+
+  public int getScore() { 
+    return score;
+  }
 
   public boolean run()
   {
-    background(0);
-    //handle mouse input
-    handleMouse();
-    //handle keyboard input
-    handleKeys();
-    //handle collisions
-    handleCollisions();
-    //handle enemies (showing, moving, spawning)
-    handleEnemies();
-
-    //show the player
-    p.show();
-
-    //if in debug mode, draw all colliders
-    debugCollisions();
-
-    //show the ui
-    ui.show();
-    if(p.isDead())
+    if (!bomb_isPlaying)
     {
-      cleanup();
-      return false;
+      background(0);
+      //handle mouse input
+      handleMouse();
+      //handle keyboard input
+      handleKeys();
+      //handle collisions
+      handleCollisions();
+      //handle enemies (showing, moving, spawning)
+      handleEnemies();
+
+      //show the player
+      b.show();
+      p.show();
+      b.showHealth();
+      //if in debug mode, draw all colliders
+      debugCollisions();
+
+      //show the ui
+      ui.show();
+      if (p.isDead()) {
+        cleanup();
+        return false;
+      } else if (b.isDead()) {
+        cleanup();
+        bomb_isPlaying = true;
+      }
+      return true;
+    } else {
+      if (bomb_radius <= bomb_maxRadius * 1.05f) {
+        pushStyle();
+        noStroke();
+        fill(255);
+        circle(width/2f, height/2f, bomb_radius);
+        popStyle();
+        bomb_radius += bomb_speed;
+        return true;
+      } else {
+        return false;
+      }
     }
-    else return true;
   }
-  
+
   void cleanup()
   {
     cleanupEnemies();

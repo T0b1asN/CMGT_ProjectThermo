@@ -30,13 +30,28 @@ public class GameUI
   public void show()
   {
     //draw the fps in the top left corner
+    pushStyle();
+    textSize(32);
+    textAlign(LEFT);
     text("fps: " + round(frameRate), 0, 32);
+    popStyle();
     //draw the health
     drawHealth();
+    
+    drawScore();
   }
 
   float spacing = 60f;
   float r = 20f;
+  
+  void drawScore()
+  {
+    pushStyle();
+    textSize(64);
+    textAlign(CENTER);
+    text("Score: " + game.getScore(), width/2f, 200f);
+    popStyle();
+  }
 
   void drawHealth()
   {
@@ -119,7 +134,6 @@ public class MainMenu implements ButtonEnabled
   public void onButtonClick(String buttonID)
   {
     if(buttonID == startButtonID) {
-      println("start game");
       startGame = true;
     }
   }
@@ -145,16 +159,22 @@ public class DeathMenu implements ButtonEnabled
     closeButton = new Button(this, closeButtonID, 
       new PVector(width/2f - 150f, height/2f - 100f),
       new PVector(300f, 100f))
-      .setText("Close");
+      .setText("Close")
+      .setNormalC(color(200))
+      .setHighlightC(color(150))
+      .setTextC(color(0));
     menuButton = new Button(this, menuButtonID, 
       new PVector(width/2f - 100f, height/2f + 150f),
       new PVector(200f, 100f))
-      .setText("Main Menu");
+      .setText("Main Menu")
+      .setNormalC(color(200))
+      .setHighlightC(color(150))
+      .setTextC(color(0));
   }
   
   public void show()
   {
-    background(0);
+    background(255);
     closeButton.show();
     menuButton.show();
   }

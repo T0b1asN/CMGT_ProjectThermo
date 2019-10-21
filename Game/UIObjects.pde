@@ -10,6 +10,7 @@ public class Button implements MouseEnabled
   
   color normalColor = color(255);
   color highlightColor = color(200);
+  color textColor = color(0);
   
   ButtonEnabled parent;
   
@@ -53,6 +54,12 @@ public class Button implements MouseEnabled
     return this;
   }
   
+  Button setTextC(color c)
+  {
+    this.textColor = c;
+    return this;
+  }
+  
   public void onMouseClick()
   {
     if(parent.isEnabled() && mouseInRect(pos, size))
@@ -74,7 +81,7 @@ public class Button implements MouseEnabled
     //text
     textAlign(CENTER);
     textSize(textSize);
-    fill(0);
+    fill(textColor);
     text(text, pos.x + size.x/2f, pos.y + size.y/2f + textSize/2f);
     popStyle();
   }

@@ -12,6 +12,8 @@ public class Enemy implements Rigidbody
   //the speed of the enemy
   float speed = 1f;
   
+  int scoreValue = 100;
+  
   //max health and health of the enemy
   int maxHealth = 4, health = maxHealth;
   
@@ -175,6 +177,7 @@ public class Enemy implements Rigidbody
   void onDestroy()
   {
     collider.onDestroy();
+    game.increaseScore(scoreValue);
     //TODO: maybe handle differently
     for(Bullet b : bullets)
     {
@@ -206,6 +209,8 @@ public class Enemy implements Rigidbody
       if(health <= 0) isDead = true;
     } else if(other.tag == Player.collisionTag) {
       //if the other collider belongs to the player, kill the enemy
+      isDead = true;
+    } else if(other.tag == Bomb.collisionTag) {
       isDead = true;
     }
   }
