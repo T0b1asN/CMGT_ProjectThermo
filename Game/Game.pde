@@ -7,6 +7,10 @@
  1 Gameplay
  1.1 enemy AI
  1.1.1 AI aims at whats nearer (bomb or player)
+ 2 Graphics
+ 2.1 player graphics
+ 2.2 enemy graphics
+ 2.3 bomb graphics
  ...
  5000 highscore system
  ...
