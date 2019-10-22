@@ -154,22 +154,26 @@ public class DeathMenu implements ButtonEnabled
   Button menuButton;
   private static final String menuButtonID = "restart";
   
+  int score = 0;
+  
   public DeathMenu()
   {
     closeButton = new Button(this, closeButtonID, 
-      new PVector(width/2f - 150f, height/2f - 100f),
-      new PVector(300f, 100f))
+      new PVector(width/2f - 150f, height/2f - 50f),
+      new PVector(300f, 75f))
       .setText("Close")
       .setNormalC(color(200))
       .setHighlightC(color(150))
       .setTextC(color(0));
     menuButton = new Button(this, menuButtonID, 
-      new PVector(width/2f - 100f, height/2f + 150f),
-      new PVector(200f, 100f))
+      new PVector(width/2f - 100f, height/2f + 50f),
+      new PVector(200f, 75f))
       .setText("Main Menu")
       .setNormalC(color(200))
       .setHighlightC(color(150))
       .setTextC(color(0));
+      
+    score = game.getScore();
   }
   
   public void show()
@@ -177,6 +181,14 @@ public class DeathMenu implements ButtonEnabled
     background(255);
     closeButton.show();
     menuButton.show();
+    
+    pushStyle();
+    fill(0);
+    noStroke();
+    textAlign(CENTER);
+    textSize(64);
+    text("Score: " + score, width/2f, 200f);
+    popStyle();
   }
   
   public void onButtonClick(String id)

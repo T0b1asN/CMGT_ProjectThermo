@@ -3,7 +3,6 @@
  //         TODO
  // -------------------
  
- 0 show score in the death menu
  1 Gameplay
  1.1 enemy AI
  1.1.1 AI aims at whats nearer (bomb or player)
@@ -11,6 +10,7 @@
  2.1 player graphics
  2.2 enemy graphics
  2.3 bomb graphics
+ 2.4 UI graphics (maybe not necessary)
  ...
  5000 highscore system
  ...
