@@ -4,6 +4,7 @@ PVector copy(PVector original)
   return new PVector(original.x, original.y);
 }
 
+//check if the mouse is in a rectangle with the given position and size
 boolean mouseInRect(PVector rectPos, PVector rectSize)
 {
   return (mouseX > rectPos.x &&

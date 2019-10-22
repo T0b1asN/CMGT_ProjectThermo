@@ -6,29 +6,17 @@ PVector enemySize;
 //spawn timer (two timers for two spawn locations
 float timerStart = 90, timer1 = 0, timerMinStart = 30;
 
-//the spawn positions
-PVector spawn1 = new PVector(), 
-  spawn2 = new PVector(), 
-  spawn3 = new PVector(), 
-  spawn4 = new PVector();
-
 //intialize the enemy handler
 void initEnemyHandler()
 {
   //set the timers
   timer1 = timerStart;
-  
-  //set the spawn positions
-  spawn1.set(width/2f, 0);
-  spawn2.set(width, height/2f);
-  spawn3.set(width/2f, height);
-  spawn4.set(0, height/2f);
 
   //set enemy size and initialize enemy list
   enemySize = new PVector(30, 30);
   enemies = new ArrayList<Enemy>();
   
-  //call each spawn variation once, to have enemies on th field
+  //spawn some random enemies in the beginning
   for(int i = 0; i < 4; i++) enemySpawn_random();
 }
 
@@ -72,23 +60,28 @@ void enemyTimer()
   timer1--;
   if (timer1 <= 0)
   {
-    //if the timer reached 0, reset it and spawn variation 1
+    //if the timer reached 0, reset it and spawn a random enemy
     timer1 = timerStart;
     enemySpawn_random();
   }
+  //if the timer max value is not to low, decrease it to spawn more enemies as the game progresses
   if(timerStart > timerMinStart)
     timerStart -= 0.01f;
 }
 
+//clean up all the enemies, so that the game can safely be restarted
 void cleanupEnemies()
 {
+  //call on destroy for every enemy, so that it can safely be destroyed
   for(Enemy e : enemies)
   {
     e.onDestroy();
   }
+  //clear the enemies array list
   enemies.clear();
 }
 
+//info about the enemy handler
 String debug_getEnemyHandlerInfo()
 {
   String info = "";
@@ -96,10 +89,12 @@ String debug_getEnemyHandlerInfo()
   return info;
 }
 
+//spawn an enemy at a random position on the edge of the screen
 void enemySpawn_random()
 {
   int r = (int)(random(1) * 4);
   PVector spawnPos = new PVector(0,0);
+  //choose a random edge of the screen and create a new point somewhere randomly on there
   if(r == 0) {
     spawnPos.x = random(-100f,width + 100f);
     spawnPos.y = -100f;
@@ -116,5 +111,6 @@ void enemySpawn_random()
     println("got value that was not expexted");
     return;
   }
+  //instantiate a new enemy on the new found point
   enemies.add(new Enemy(spawnPos, enemySize, 150f));
 }

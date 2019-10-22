@@ -76,9 +76,10 @@ boolean mouse = false;
 //when calculating stuff with the mouse position
 PVector mouseVec;
 
+//the list of MouseEnabled objects wanting a callback, when the mouse is pressed
 ArrayList<MouseEnabled> mEnabled;
 
-//initialize mouse handling by creating mouseVec
+//initialize mouse handling by creating mouseVec and initializing the mEnabled list
 void initMouse()
 {
   mouseVec = new PVector(mouseX, mouseY);
@@ -101,11 +102,13 @@ void mousePressed()
   mouse = true;
 }
 
+//add a MouseEnabled object to the mEnabled list
 void addMouseEnabled(MouseEnabled m)
 {
   mEnabled.add(m);
 }
 
+//remove a MouseEnabled object from the mEnabled list
 void removeMouseEnabled(MouseEnabled m)
 {
   mEnabled.remove(m);
@@ -190,6 +193,7 @@ void removeCollider(Collider col)
   this.col.remove(col);
 }
 
+//info about the collision handler
 String debug_getCollisionHandlingInfo()
 {
   String info = "";
