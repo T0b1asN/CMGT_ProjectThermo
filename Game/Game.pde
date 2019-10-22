@@ -4,13 +4,20 @@
  // -------------------
  
  1 Gameplay
- 1.1 enemy AI
- 1.1.1 AI aims at whats nearer (bomb or player)
+ done 1.1 enemy AI
+ done 1.1.1 AI aims at whats nearer (bomb or player)
+ done 1.2 enemy spawning
+ done 1.2.1 spawn enemy at random point around edge
  2 Graphics
  2.1 player graphics
  2.2 enemy graphics
  2.3 bomb graphics
  2.4 UI graphics (maybe not necessary)
+ 3 Gameplay
+ 3.1 Balancing
+ 3.1.1 figure out enemy stats
+ 3.1.2 figure out player stats
+ 3.1.3 figure out bomb stats
  ...
  5000 highscore system
  ...
@@ -156,6 +163,11 @@ public class MainGame
   public Player getP() { 
     if (p == null) return p = new Player(); 
     else return p;
+  }
+  
+  public Bomb getB()
+  {
+    return b;
   }
 
   public void increaseScore(int amount) { 

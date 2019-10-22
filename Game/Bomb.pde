@@ -8,7 +8,7 @@ public class Bomb implements Rigidbody
   float healthYOffset = 25f;
   float healthYSize = 15f;
   
-  int maxHealth = 10, health = maxHealth;
+  int maxHealth = 100, health = maxHealth;
   
   RectangleCollider collider;
   public static final String collisionTag = "bomb";
@@ -62,6 +62,11 @@ public class Bomb implements Rigidbody
   public PVector getPos()
   {
     return pos;
+  }
+  
+  public PVector getCenter()
+  {
+    return new PVector(pos.x + .5f * size.x, pos.y + .5f * size.y);
   }
   
   public void onDestroy()

@@ -4,7 +4,7 @@ ArrayList<Enemy> enemies;
 PVector enemySize;
 
 //spawn timer (two timers for two spawn locations
-int timerMax = 360, timer1 = 0, timer2 = timerMax;
+float timerStart = 90, timer1 = 0, timerMinStart = 30;
 
 //the spawn positions
 PVector spawn1 = new PVector(), 
@@ -16,8 +16,7 @@ PVector spawn1 = new PVector(),
 void initEnemyHandler()
 {
   //set the timers
-  timer1 = timerMax/2; 
-  timer2 = timerMax;
+  timer1 = timerStart;
   
   //set the spawn positions
   spawn1.set(width/2f, 0);
@@ -30,8 +29,7 @@ void initEnemyHandler()
   enemies = new ArrayList<Enemy>();
   
   //call each spawn variation once, to have enemies on th field
-  enemySpawn_Var1();
-  enemySpawn_Var2();
+  for(int i = 0; i < 4; i++) enemySpawn_random();
 }
 
 //handle the enemies
@@ -75,17 +73,11 @@ void enemyTimer()
   if (timer1 <= 0)
   {
     //if the timer reached 0, reset it and spawn variation 1
-    timer1 = timerMax;
-    enemySpawn_Var1();
+    timer1 = timerStart;
+    enemySpawn_random();
   }
-  //decrease timer2
-  timer2--;
-  if (timer2 <= 0)
-  {
-    //if the timer reached 0, reset it and spawn variation 2
-    timer2 = timerMax;
-    enemySpawn_Var2();
-  }
+  if(timerStart > timerMinStart)
+    timerStart -= 0.01f;
 }
 
 void cleanupEnemies()
@@ -104,18 +96,25 @@ String debug_getEnemyHandlerInfo()
   return info;
 }
 
-//spawn variation 1
-void enemySpawn_Var1()
+void enemySpawn_random()
 {
-  //spawn an enemy each in spawn point 1 and 3
-  enemies.add(new Enemy(spawn1, enemySize, 150f));
-  enemies.add(new Enemy(spawn3, enemySize, 150f));
-}
-
-//spawn variation 2
-void enemySpawn_Var2()
-{
-  //spawn an enemy each in spawn point 2 and 4
-  enemies.add(new Enemy(spawn2, enemySize, 150f));
-  enemies.add(new Enemy(spawn4, enemySize, 150f));
+  int r = (int)(random(1) * 4);
+  PVector spawnPos = new PVector(0,0);
+  if(r == 0) {
+    spawnPos.x = random(-100f,width + 100f);
+    spawnPos.y = -100f;
+  } else if(r == 1) {
+    spawnPos.x = width + 100f;
+    spawnPos.y = random(-100f,height + 100f);
+  } else if(r == 2) {
+    spawnPos.y = height + 100f;
+    spawnPos.x = random(-100f,width + 100f);
+  } else if(r == 3) {
+    spawnPos.x = -100f;
+    spawnPos.y = random(-100f,height + 100f);
+  } else {
+    println("got value that was not expexted");
+    return;
+  }
+  enemies.add(new Enemy(spawnPos, enemySize, 150f));
 }
