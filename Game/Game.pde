@@ -38,6 +38,8 @@ MainGame game;
 //the instance of the DeathMenu class handling the death menu/game over screen
 DeathMenu deathMenu;
 
+HighscoreHandler hsHandler;
+
 //The enum to describe the state the game is in currently
 //  MAINMENU: the game is in main menu and is going to be started
 //  PLAY    : the game is playing right now and the player is fighting enemy tanks
@@ -61,6 +63,9 @@ void setup()
   initMouse();
   initKeys();
   initCollisions();
+  
+  hsHandler = new HighscoreHandler();
+  hsHandler.readHighscores();
 
   //create a new main menu
   menu = new MainMenu();
