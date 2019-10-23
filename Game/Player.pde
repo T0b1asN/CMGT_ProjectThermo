@@ -123,25 +123,25 @@ public class Player implements Rigidbody, MouseEnabled
     line(pos.x, pos.y, dir_temp.x, dir_temp.y);
     popStyle();
     
-    //Bullets
-    //the list of bullets up for deletion
-    ArrayList<Bullet> found = new ArrayList<Bullet>();
-    for(Bullet b : bullets)
-    {
-      if(b.isDead()) {
-        //if the bullet should be deleted, add it to the deletion list
-        found.add(b);
-        //call onDestroy() on it
-        b.onDestroy();
-      }
-      else {
-        //if it shouldnt be deleted, move and show the bullet
-        b.move();
-        b.show();
-      }
-    }
-    //remove all bullets up for deletion
-    bullets.removeAll(found);
+    ////Bullets
+    ////the list of bullets up for deletion
+    //ArrayList<Bullet> found = new ArrayList<Bullet>();
+    //for(Bullet b : bullets)
+    //{
+    //  if(b.isDead()) {
+    //    //if the bullet should be deleted, add it to the deletion list
+    //    found.add(b);
+    //    //call onDestroy() on it
+    //    b.onDestroy();
+    //  }
+    //  else {
+    //    //if it shouldnt be deleted, move and show the bullet
+    //    b.move();
+    //    b.show();
+    //  }
+    //}
+    ////remove all bullets up for deletion
+    //bullets.removeAll(found);
   }
   
   //called when the mouse is pressed down
@@ -149,7 +149,8 @@ public class Player implements Rigidbody, MouseEnabled
   {
     //shoot by instantiating a new bullet
     Bullet n = new Bullet(this.pos, this.dir, 9f, bulletTag, color(0,0,255));
-    bullets.add(n);
+    //bullets.add(n);
+    addBullet(n);
   }
   
   public boolean isDead()

@@ -13,7 +13,7 @@ void initEnemyHandler()
   timer1 = timerStart;
 
   //set enemy size and initialize enemy list
-  enemySize = new PVector(30, 30);
+  enemySize = new PVector(50, 50);
   enemies = new ArrayList<Enemy>();
   
   //spawn some random enemies in the beginning

@@ -10,7 +10,7 @@
  done 1.2.1 spawn enemy at random point around edge
  2 Graphics
  2.1 player graphics
- 2.2 enemy graphics
+ done 2.2 enemy graphics
  2.3 bomb graphics
  2.4 UI graphics (maybe not necessary)
  3 Gameplay
@@ -205,6 +205,8 @@ public class MainGame
     //CRUCIAL: do this after creating the player
     initEnemyHandler();
     
+    initBulletHandling();
+    
     //set the score to 0
     score = 0;
   
@@ -256,15 +258,18 @@ public class MainGame
       handleMouse();
       //handle keyboard input
       handleKeys();
-      //handle collisions
-      handleCollisions();
       //handle enemies (showing, moving, spawning)
       handleEnemies();
+      //handle collisions
+      handleCollisions();
 
       //show the player, bomb and bomb health
       b.show();
       p.show();
       b.showHealth();
+      
+      handleBullets();
+      
       //if in debug mode, draw all colliders
       debugCollisions();
 

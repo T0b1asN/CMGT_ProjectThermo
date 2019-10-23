@@ -10,7 +10,7 @@ public class Enemy implements Rigidbody
   //the size of the enemy
   PVector size;
   //the speed of the enemy
-  float speed = .25f;
+  float speed = .35f;
 
   int scoreValue = 100;
 
@@ -101,34 +101,57 @@ public class Enemy implements Rigidbody
     //translate to the position
     translate(pos.x, pos.y);
     //rotate to shootDir
-    rotate(-atan2(shootDir.x, shootDir.y));
+    rotate(-atan2(moveDir.x, moveDir.y));
 
     pushStyle();
-    fill(200, 200, 150);
+    fill(100, 100, 100);
     //rect(-size.x/2f, -size.y/2f, size.x, size.y);
 
-    //draw a triangle
-    triangle(0, size.y/2f, size.x/2f, -size.y/2f, -size.x/2f, -size.y/2f);
+    //draw the tracks
+    //left
+    rect(
+      -size.x*.9f/2f, -size.y*.9f/2f, //position
+      size.x*.5f/2f, size.y*1.8f/2f,  //size
+      size.x*.1f                //edge rounding
+    );
+    //right
+    rect(
+      (size.x*.9f-size.x*.5f)/2f, -size.y*.9f/2f, //position
+      size.x*.5f/2f, size.y*1.8f/2f,            //size
+      size.x*.1f                          //edge rounding
+    );
+    //draw the main body (quad)
+    fill(150,40,40);
+    quad(
+      -size.x/2f, -size.y/2f,
+      size.x/2f, -size.y/2f,
+      size.x/8f, size.y/2f,
+      -size.x/8f, size.y/2f
+    );
+    fill(255,50,50);
+    rotate(atan2(moveDir.x, moveDir.y));
+    rotate(-atan2(shootDir.x, shootDir.y));
+    triangle(0, size.y/4f, size.x/4f, -size.y/4f, -size.x/4f, -size.y/4f);
     popStyle();
     popMatrix();
 
-    //handle the bullets
-    //create a new ArrayList with bullets to remove
-    ArrayList<Bullet> found = new ArrayList<Bullet>();
-    for (Bullet b : bullets)
-    {
-      if (b.isDead()) {
-        // if the bullet should be deleted, add it to the list for that and call its function onDestroy()
-        found.add(b);
-        b.onDestroy();
-      } else {
-        // id it shouldnt be deleted, move it and draw it
-        b.move();
-        b.show();
-      }
-    }
-    //remove all the bullets that should be removed
-    bullets.removeAll(found);
+    ////handle the bullets
+    ////create a new ArrayList with bullets to remove
+    //ArrayList<Bullet> found = new ArrayList<Bullet>();
+    //for (Bullet b : bullets)
+    //{
+    //  if (b.isDead()) {
+    //    // if the bullet should be deleted, add it to the list for that and call its function onDestroy()
+    //    found.add(b);
+    //    b.onDestroy();
+    //  } else {
+    //    // id it shouldnt be deleted, move it and draw it
+    //    b.move();
+    //    b.show();
+    //  }
+    //}
+    ////remove all the bullets that should be removed
+    //bullets.removeAll(found);
 
     //handle timer
     if (currentTargetIsPlayer) {
@@ -152,7 +175,8 @@ public class Enemy implements Rigidbody
   {
     //instantiate a new bullet at this position in the shoot direction, with a speed of 7f and the bullet collision tag
     Bullet n = new Bullet(this.pos, this.shootDir, 7f, bulletTag);
-    bullets.add(n);
+    //bullets.add(n);
+    addBullet(n);
   }
 
   //move the enemy
