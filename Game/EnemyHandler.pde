@@ -4,7 +4,7 @@ ArrayList<Enemy> enemies;
 PVector enemySize;
 
 //spawn timer (two timers for two spawn locations
-float timerStart = 90, timer1 = 0, timerMinStart = 30;
+float timerStart = 90, timer1 = 0, timerMinStart = 50;
 
 //intialize the enemy handler
 void initEnemyHandler()
@@ -17,7 +17,7 @@ void initEnemyHandler()
   enemies = new ArrayList<Enemy>();
   
   //spawn some random enemies in the beginning
-  for(int i = 0; i < 4; i++) enemySpawn_random();
+  for(int i = 0; i < 4; i++) enemySpawn_random(2);
 }
 
 //handle the enemies
@@ -62,11 +62,11 @@ void enemyTimer()
   {
     //if the timer reached 0, reset it and spawn a random enemy
     timer1 = timerStart;
-    enemySpawn_random();
+    enemySpawn_random(floor(map(timerStart, 90, timerMinStart, 2, 4)));
   }
   //if the timer max value is not to low, decrease it to spawn more enemies as the game progresses
   if(timerStart > timerMinStart)
-    timerStart -= 0.01f;
+    timerStart -= 0.008f;
 }
 
 //clean up all the enemies, so that the game can safely be restarted
@@ -90,7 +90,7 @@ String debug_getEnemyHandlerInfo()
 }
 
 //spawn an enemy at a random position on the edge of the screen
-void enemySpawn_random()
+void enemySpawn_random(int health)
 {
   int r = (int)(random(1) * 4);
   PVector spawnPos = new PVector(0,0);
@@ -112,5 +112,5 @@ void enemySpawn_random()
     return;
   }
   //instantiate a new enemy on the new found point
-  enemies.add(new Enemy(spawnPos, enemySize, 150f));
+  enemies.add(new Enemy(spawnPos, enemySize, 150f, health));
 }

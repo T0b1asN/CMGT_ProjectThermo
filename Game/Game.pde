@@ -17,7 +17,7 @@
  3.1 Balancing
  3.1.1 figure out enemy stats
  3.1.2 figure out player stats
- 3.1.3 figure out bomb stats
+ 3.1.3 figure out bomb statsd
  ...
  5000 highscore system
  ...
@@ -314,7 +314,6 @@ public class MainGame
       }
     }
   }
-  
   //clean up the game
   void cleanup()
   {

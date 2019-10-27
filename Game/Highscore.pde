@@ -46,7 +46,6 @@ public class HighscoreHandler
     String[] lines = loadStrings(fileName);
     for(int i = 0; i < lines.length; i++)
     {
-      //println(lines[i]);
       highscores.add(new Highscore(lines[i]));
     }
   }

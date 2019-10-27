@@ -18,7 +18,7 @@ public class Enemy implements Rigidbody
   int maxHealth = 2, health = maxHealth;
 
   //shooting timer
-  int startValue = 240, timer = startValue;
+  int startValue = 180, timer = startValue;
 
   //target the enemy wants to reach
   PVector target;
@@ -45,6 +45,18 @@ public class Enemy implements Rigidbody
 
   //constructor with parameters for position, size and distance to player
   public Enemy(PVector pos, PVector size, float targetDist)
+  {
+    _setup(pos, size, targetDist);
+  }
+  
+  public Enemy(PVector pos, PVector size, float targetDist, int maxHealth)
+  {
+    _setup(pos, size, targetDist);
+    this.maxHealth = maxHealth;
+    health = maxHealth;
+  }
+  
+  private void _setup(PVector pos, PVector size, float targetDist)
   {
     //copy size and position
     this.pos = copy(pos);
@@ -135,24 +147,6 @@ public class Enemy implements Rigidbody
     popStyle();
     popMatrix();
 
-    ////handle the bullets
-    ////create a new ArrayList with bullets to remove
-    //ArrayList<Bullet> found = new ArrayList<Bullet>();
-    //for (Bullet b : bullets)
-    //{
-    //  if (b.isDead()) {
-    //    // if the bullet should be deleted, add it to the list for that and call its function onDestroy()
-    //    found.add(b);
-    //    b.onDestroy();
-    //  } else {
-    //    // id it shouldnt be deleted, move it and draw it
-    //    b.move();
-    //    b.show();
-    //  }
-    //}
-    ////remove all the bullets that should be removed
-    //bullets.removeAll(found);
-
     //handle timer
     if (currentTargetIsPlayer) {
       timer--;
@@ -218,7 +212,7 @@ public class Enemy implements Rigidbody
   void onDestroy()
   {
     collider.onDestroy();
-    game.increaseScore(scoreValue);
+    game.increaseScore((int)map(maxHealth, 2, 4, scoreValue, 400));
     //TODO: maybe handle differently
     for (Bullet b : bullets)
     {
@@ -234,6 +228,7 @@ public class Enemy implements Rigidbody
     noFill();
     //calculate the health percentage
     float perc = (float)health/(float)maxHealth;
+    //println("health: " + health + ", max health: " + maxHealth + ", %: " + perc);
     //draw a line from the healthbar position to size.x*percentage on the x axis
     line(healthPos.x+pos.x, healthPos.y+pos.y, healthPos.x+pos.x+(size.x*perc), healthPos.y+pos.y); 
     popStyle();
