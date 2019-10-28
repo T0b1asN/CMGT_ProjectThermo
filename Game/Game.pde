@@ -33,6 +33,8 @@ MainGame game;
 //the instance of the DeathMenu class handling the death menu/game over screen
 DeathMenu deathMenu;
 
+color backgroundColor = color(89, 56, 28);
+
 HighscoreHandler hsHandler;
 
 //The enum to describe the state the game is in currently
@@ -253,7 +255,7 @@ public class MainGame
     {
       //if the animation is not playing do the normal gameplay stuff
       
-      background(0);
+      background(backgroundColor);
       //handle mouse input
       handleMouse();
       //handle keyboard input
@@ -279,7 +281,8 @@ public class MainGame
         //if the player is dead, clean up the game and return false,
         //  because the game should stop playing
         cleanup();
-        return false;
+        bomb_isPlaying = true;
+        //return false;
       } else if (b.isDead()) {
         //if the bomb is dead, clean up the game and set the animation to play
         //  dont return false to stop the game loop from playing,

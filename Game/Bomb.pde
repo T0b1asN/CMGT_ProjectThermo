@@ -18,6 +18,8 @@ public class Bomb implements Rigidbody
   RectangleCollider collider;
   public static final String collisionTag = "bomb";
   
+  color c = color(65, 114, 21);
+  
   //the bombs default constructor
   public Bomb()
   {
@@ -37,8 +39,9 @@ public class Bomb implements Rigidbody
     //set the ellipse mode to CORNER (needed for some drawing)
     //goes away after popStyle();
     ellipseMode(CORNER);
-    noStroke();
-    fill(255);
+    stroke(0);
+    strokeWeight(2.5f);
+    fill(c);
     //the bomb is made up of an ellipse and a rectangle, draw them
     ellipse(pos.x, pos.y, size.x * .75f, size.y);
     rect(pos.x + size.x * 0.75f, pos.y, size.x * .25f, size.y);
