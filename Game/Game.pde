@@ -3,21 +3,16 @@
  //         TODO
  // -------------------
  
- 1 Gameplay
- done 1.1 enemy AI
- done 1.1.1 AI aims at whats nearer (bomb or player)
- done 1.2 enemy spawning
- done 1.2.1 spawn enemy at random point around edge
- 2 Graphics
- 2.1 player graphics
- done 2.2 enemy graphics
- 2.3 bomb graphics
- 2.4 UI graphics (maybe not necessary)
- 3 Gameplay
- 3.1 Balancing
- 3.1.1 figure out enemy stats
- 3.1.2 figure out player stats
- 3.1.3 figure out bomb statsd
+ 1 Graphics
+ 1.1 player graphics
+ done 1.2 enemy graphics
+ 1.3 bomb graphics
+ 1.4 UI graphics (maybe not necessary)
+ 2 Gameplay
+ 2.1 Balancing
+ 2.1.1 figure out enemy stats
+ 2.1.2 figure out player stats
+ 2.1.3 figure out bomb statsd
  ...
  5000 highscore system
  ...
