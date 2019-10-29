@@ -6,13 +6,10 @@
  1 Graphics
  1.1 player graphics
  done 1.2 enemy graphics
- 1.3 bomb graphics
+ done 1.3 bomb graphics
  1.4 UI graphics (maybe not necessary)
- 2 Gameplay
- 2.1 Balancing
- 2.1.1 figure out enemy stats
- 2.1.2 figure out player stats
- 2.1.3 figure out bomb statsd
+ done 1.4.1 Main Menu
+ 1.4.2 Death Menu
  ...
  5000 highscore system
  ...
@@ -34,6 +31,8 @@ MainGame game;
 DeathMenu deathMenu;
 
 color backgroundColor = color(89, 56, 28);
+PImage title;
+PImage nuclear;
 
 HighscoreHandler hsHandler;
 
@@ -52,7 +51,10 @@ void setup()
 {
   //fullScreen();
   size(800, 800);
-
+  
+  title = loadImage("Title.png");
+  nuclear = loadImage("nuclear.png");
+  
   //if desired enter debug mode
   if (debug) debugMode();
 

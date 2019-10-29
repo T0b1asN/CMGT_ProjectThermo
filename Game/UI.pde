@@ -89,7 +89,7 @@ public class MainMenu implements ButtonEnabled
   {
     //instantiate the start button with the id, a position, a size and set some text for it
     startButton = new Button(this, startButtonID, 
-      new PVector(width/2f-100f, height/2f-50f), 
+      new PVector(width/2f-100f, height/2f+100f), 
       new PVector(200f, 100f))
       .setText("Start Game");
   }
@@ -113,7 +113,16 @@ public class MainMenu implements ButtonEnabled
   {
     background(0);
     //draw the button
+    pushStyle();
+    tint(243, 210, 52);
+    image(nuclear, width/2f - 175, 50, 350, 350);
+    popStyle();
+    
     startButton.show();
+    pushStyle();
+    tint(190, 54, 5);
+    image(title, width/2f - 350, 100, 700, 350);
+    popStyle();
     //return true if the game shouldnt start
     return !startGame;
   }
