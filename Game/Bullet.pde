@@ -34,8 +34,8 @@ public class Bullet implements Rigidbody
     //ignore collision with objects of same tag
     collider.ignoreCollision(tag);
 
-    //set color to red
-    c = color(255, 0, 0);
+    //set color to black
+    c = color(0);
   }
 
   //collider with parameters for position, direction, speed, collision tag and color

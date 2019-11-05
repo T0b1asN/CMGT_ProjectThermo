@@ -97,24 +97,8 @@ public class Player implements Rigidbody, MouseEnabled
     dir = new PVector(mouseX, mouseY).sub(pos);
     dir.normalize();
     
-    //draw everything
-    //set the style
-    pushStyle();
-    fill(255);
-    
     drawBody();
-    
-    //copy the direction vector
-    PVector dir_temp = new PVector(dir.x, dir.y);
-    stroke(255);
-    strokeWeight(5);
-    //increase the magnitude of the direction copy
-    dir_temp.setMag(100);
-    //add the position to the copy
-    dir_temp.add(pos);
-    //draw a line between position and the modified direction vector
-    line(pos.x, pos.y, dir_temp.x, dir_temp.y);
-    popStyle();
+    drawTower();
   }
   
   void drawBody()
@@ -125,6 +109,17 @@ public class Player implements Rigidbody, MouseEnabled
     //rotate to look in the move direction
     rotate(-atan2(moveDir.x, moveDir.y));
     //draw a triangle
+    
+    //tracks
+    pushStyle();
+    fill(80);
+    rect(-r*.95f, -r*.95f, r*.6f, r*1.9f, 4);
+    rect(r*.95f-r*.6f, -r*.95f, r*.6f, r*1.9f, 4);
+    popStyle();
+    
+    //body
+    pushStyle();
+    fill(83, 107, 30);
     beginShape();
     
     vertex(-r*.25f, -r*.9f);
@@ -150,15 +145,36 @@ public class Player implements Rigidbody, MouseEnabled
     endShape(CLOSE);
     //triangle(-r, -r, 0, r, r, -r);
     //circle(pos.x, pos.y, r*2);
+    popStyle();
+    popMatrix();
+  }
+  
+  void drawTower()
+  {
+    pushStyle();
+    fill(107, 133, 52);
+    pushMatrix();
+    
+    translate(pos.x,pos.y);
+    rotate(-atan2(dir.x, dir.y));
+    arc(0,0,r,r,PI,TWO_PI);
+    
+    beginShape();
+    vertex(-r*.5f,0);
+    vertex(-r*.1f, r);
+    vertex(r*.1f, r);
+    vertex(r*.5f,0);
+    endShape();
     
     popMatrix();
+    popStyle();
   }
   
   //called when the mouse is pressed down
   void onMouseClick()
   {
     //shoot by instantiating a new bullet
-    Bullet n = new Bullet(this.pos, this.dir, 9f, bulletTag, color(0,0,255));
+    Bullet n = new Bullet(this.pos, this.dir, 9f, bulletTag, color(255));
     //bullets.add(n);
     addBullet(n);
   }

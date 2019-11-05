@@ -1,25 +1,3 @@
-/*
-// -------------------
- //         TODO
- // -------------------
- 
- 1 Graphics
- 1.1 player graphics
- done 1.2 enemy graphics
- done 1.3 bomb graphics
- 1.4 UI graphics (maybe not necessary)
- done 1.4.1 Main Menu
- 1.4.2 Death Menu
- ...
- 5000 highscore system
- ...
- 10000 make render handler
- 
- // -------------------
- //     END OF TODO
- // -------------------
- */
-
 //is the game in debug mode
 boolean debug = false;
 
