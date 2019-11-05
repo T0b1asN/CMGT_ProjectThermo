@@ -21,7 +21,7 @@ public class Player implements Rigidbody, MouseEnabled
   //the players collision tag
   public static final String collisionTag = "player";
   //the players radius
-  final float r = 25f;
+  final float r = 30f;
   
   //the players collider
   CircleCollider collider;
@@ -101,16 +101,9 @@ public class Player implements Rigidbody, MouseEnabled
     //set the style
     pushStyle();
     fill(255);
-    pushMatrix();
-    //translate to the position
-    translate(pos.x, pos.y);
-    //rotate to look in the move direction
-    rotate(-atan2(moveDir.x, moveDir.y));
-    //draw a triangle
-    triangle(-r, -r, 0, r, r, -r);
-    //circle(pos.x, pos.y, r*2);
     
-    popMatrix();
+    drawBody();
+    
     //copy the direction vector
     PVector dir_temp = new PVector(dir.x, dir.y);
     stroke(255);
@@ -122,26 +115,43 @@ public class Player implements Rigidbody, MouseEnabled
     //draw a line between position and the modified direction vector
     line(pos.x, pos.y, dir_temp.x, dir_temp.y);
     popStyle();
+  }
+  
+  void drawBody()
+  {
+    pushMatrix();
+    //translate to the position
+    translate(pos.x, pos.y);
+    //rotate to look in the move direction
+    rotate(-atan2(moveDir.x, moveDir.y));
+    //draw a triangle
+    beginShape();
     
-    ////Bullets
-    ////the list of bullets up for deletion
-    //ArrayList<Bullet> found = new ArrayList<Bullet>();
-    //for(Bullet b : bullets)
-    //{
-    //  if(b.isDead()) {
-    //    //if the bullet should be deleted, add it to the deletion list
-    //    found.add(b);
-    //    //call onDestroy() on it
-    //    b.onDestroy();
-    //  }
-    //  else {
-    //    //if it shouldnt be deleted, move and show the bullet
-    //    b.move();
-    //    b.show();
-    //  }
-    //}
-    ////remove all bullets up for deletion
-    //bullets.removeAll(found);
+    vertex(-r*.25f, -r*.9f);
+    vertex(-r*.3f, -r);
+    vertex(-r*.8f, -r);
+    vertex(-r, -r*.5f);
+    vertex(-r, 0);
+    vertex(-r*.75f, r);
+    vertex(-r*.55f, r);
+    vertex(-r*.4f, r*.35f);
+    
+    vertex(0, r*.15f);
+    
+    vertex(r*.4f, r*.35f);
+    vertex(r*.55f, r);
+    vertex(r*.75f, r);
+    vertex(r, 0);
+    vertex(r, -r*.5f);
+    vertex(r*.8f, -r);
+    vertex(r*.3f, -r);
+    vertex(r*.25f, -r*.9f);
+    
+    endShape(CLOSE);
+    //triangle(-r, -r, 0, r, r, -r);
+    //circle(pos.x, pos.y, r*2);
+    
+    popMatrix();
   }
   
   //called when the mouse is pressed down
