@@ -1,4 +1,4 @@
-//is the game in debug mode
+//is the game in debug moded
 boolean debug = false;
 
 //the instance of the MainMenu class handling the main menu

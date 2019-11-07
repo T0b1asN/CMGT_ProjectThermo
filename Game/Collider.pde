@@ -199,6 +199,9 @@ public class RectangleCollider extends Collider
   }
 
   //handle collision with a circle collider
+  // ----------------------------------------------------------------
+  //   THIS FUNCTION WAS COPIED FROM THE INTERNET (jeffreythompson)
+  // ----------------------------------------------------------------
   private boolean collisionWithCircle(CircleCollider other)
   {
     // temporary variables to set edges for testing
@@ -228,6 +231,9 @@ public class RectangleCollider extends Collider
     return false;
   }
 
+  // ----------------------------------------------------------------
+  //   THIS FUNCTION WAS COPIED FROM THE INTERNET (jeffreythompson)
+  // ----------------------------------------------------------------
   private boolean collisionWithRectangle(RectangleCollider other)
   {
     //own position
